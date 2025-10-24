@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:couldai_user_app/services/notification_service.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 
