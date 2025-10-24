@@ -15,7 +15,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0), // Reduced padding
+        childAspectRatio: 1.1, // Adjust aspect ratio
         children: <Widget>[
           _buildFeatureCard(
             context,
@@ -63,17 +64,34 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildFeatureCard(BuildContext context, String title, IconData icon, Color color, VoidCallback onTap) {
-    return Card(
-      margin: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(icon, size: 50.0, color: color),
-            const SizedBox(height: 10.0),
-            Text(title, style: const TextStyle(fontSize: 16.0)),
-          ],
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0.95, end: 1.0),
+      duration: const Duration(milliseconds: 500),
+      builder: (context, scale, child) {
+        return Transform.scale(
+          scale: scale,
+          child: child,
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.all(6.0), // Reduced margin
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15),
+          onTap: onTap,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(icon, size: 45.0, color: color), // Slightly smaller icon
+              const SizedBox(height: 12.0),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500), // Adjusted text
+              ),
+            ],
+          ),
         ),
       ),
     );
